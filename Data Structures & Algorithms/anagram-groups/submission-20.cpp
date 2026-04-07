@@ -1,0 +1,25 @@
+#include <vector>
+#include <string>
+#include <ranges>
+#include <algorithm>
+#include <unordered_map>
+
+class Solution {
+public:
+    std::vector<std::vector<std::string>> groupAnagrams(std::vector<std::string>& strs) {
+        std::unordered_map<std::string, std::vector<std::string>> anagram_groups{};
+        for (const auto& str : strs) {
+            auto key = str;
+            std::ranges::sort(key);
+            anagram_groups[key].push_back(str);
+        }
+
+        std::vector<std::vector<std::string>> output{};
+        output.reserve(anagram_groups.size());
+        for (auto& [_, group] : anagram_groups) {
+            output.push_back(std::move(group));
+        }
+
+        return output;
+    }
+};
